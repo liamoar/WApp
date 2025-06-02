@@ -37,7 +37,7 @@ async function handleBundleSelection(phone, selection, metadata = {}) {
     ...metadata,
     selectedBundleId: bundle.id,
   }, bundle.stripe_price_id);
-  console.log("checkout session");
+
   // Build a short link to your server that will redirect to Stripe checkout page
   const shortLink = `${process.env.DOMAIN}/pay/${session.id}`;
   await sendMessage(phone, `Click here to unlock me now and get full access to our private chat 🔥:\n\n 👉 ${shortLink}`);

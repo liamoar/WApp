@@ -17,6 +17,7 @@ const ConversationStateSchema = new mongoose.Schema({
   q2: String,
   onBoardingCompleted : {type: Boolean, default: false},
   awaitingBundleSelection: { type: Boolean, default: false },
+  stripeCheckoutSessionId : {type:String},
   lastPaymentDate : Date,
 }, { _id: false });
 

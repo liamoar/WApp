@@ -1,5 +1,6 @@
 const { sendMessage, sendImage } = require('../services/whatsappService');
 const { showBundleOptions, handleBundleSelection } = require('./bundlePurchase');
+const {retrieveSession} = require('../services/paymentService');
 
 module.exports = async function handleCommand(phone, msg, userUsage) {
   // Debug: confirm Mongoose doc with save method
@@ -61,6 +62,8 @@ module.exports = async function handleCommand(phone, msg, userUsage) {
           if(session) {
             state.awaitingBundleSelection = false;
             state.step = "post_purchase";
+            state.stripeCheckoutSessionId = session.id
+            state.stripeCheckoutSessionId
           }
         } else {
           await sendMessage(phone, "Invalid response, Please reply with 1, 2...");
@@ -72,8 +75,19 @@ module.exports = async function handleCommand(phone, msg, userUsage) {
       break;  
 
     case 'post_purchase':
-    //TODO: check if the payment is actually done here or not  
-    await sendMessage(phone, "Thanks for your purchase! You'll get the full photo shortly.");
+       const stripeSessionId = await retrieveSession(state.stripeCheckoutSessionId);
+       console.log(stripeSessionId.id);
+       if(stripeSessionId && stripeSessionId.payment_status == "paid"){
+         await sendMessage(phone, "Thanks for your purchase!");
+       }else{
+          if(stripeSessionId.status !="complete"){
+            const shortLink = `${process.env.DOMAIN}/pay/${stripeSessionId.id}`;
+            await sendMessage(phone, `Click here to unlock me now and get full access to our private chat 🔥:\n\n 👉 ${shortLink}`);
+          }else{
+            state.awaitingBundleSelection = false;
+            state.step="waiting_payment"
+          }
+       }
       // Additional post purchase flow can be added here
       break;
     

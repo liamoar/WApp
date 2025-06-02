@@ -53,7 +53,7 @@ async function handleSuccess(req, res) {
       `🎉 Payment successful! You've received:\n` +
       `📝 ${bundle.messages} messages\n` +
       `🖼️ ${bundle.images} images\n\n` +
-      `You can now continue chatting. Type 'menu' anytime for options.`
+      `You can now continue chatting.`
     );
 
     return res.json("Purchased successfull");
@@ -79,6 +79,7 @@ async function handleRedirect(req, res){
     return res.status(500).send('Failed to redirect to payment page.');
   }
 }
+ 
 
 module.exports = {
   handleSuccess,
