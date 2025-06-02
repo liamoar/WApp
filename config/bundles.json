@@ -1,0 +1,20 @@
+[
+  {
+    "id": "001",
+    "name": "Basic Pack",
+    "description": "5 messages + 2 images",
+    "messages": 5,
+    "images": 2,
+    "price_usd": 3,
+    "stripe_price_id": "price_1RVQbUCaWBEitcRcUg3F9taq"
+  },
+  {
+    "id": "002",
+    "name": "Pro Pack",
+    "description": "10 messages + 5 images",
+    "messages": 10,
+    "images": 5,
+    "price_usd": 5,
+    "stripe_price_id": "price_1RVQcECaWBEitcRcCVfs1jpU"
+  }
+]
