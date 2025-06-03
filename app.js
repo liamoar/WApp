@@ -11,4 +11,9 @@ app.use(bodyParser.json());
 app.use('/webhook', webhookRoutes);
 app.use('/', paymentRoutes);
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'Running OK', timestamp: new Date() });
+});
+
+
 module.exports = app;
