@@ -2,7 +2,7 @@ const { sendMessage, sendImage } = require('../services/whatsappService');
 const { showBundleOptions, handleBundleSelection } = require('./bundlePurchase');
 const {retrieveSession} = require('../services/paymentService');
 
-module.exports = async function handleCommand(phone, msg, userUsage) {
+module.exports = async function  handleCommand(phone, msg, userUsage) {
   // Debug: confirm Mongoose doc with save method
   if (!userUsage || typeof userUsage.save !== 'function') {
     console.error('handleCommand error: userUsage is not a Mongoose document:', userUsage);
@@ -35,7 +35,7 @@ module.exports = async function handleCommand(phone, msg, userUsage) {
       state.q2 = msg;
       const imageSent = await sendImage(
         phone,
-        'https://images.unsplash.com/photo-1647724065024-0389996ac3bf?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://lp.sparktube.co/images/offer.jpg',
         '👀😉'
       );
       await sendMessage(phone, "Want to see how far I can take you? 💋");
