@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { GUPSHUP_API_KEY } = require('../config');
+const { GUPSHUP_API_KEY,GUPSHUP_APP_NAME } = require('../config');
 const logger = require('../config/logger');
 
 const headers = {
@@ -15,7 +15,7 @@ async function sendMessage(to, text) {
       source: '917834811114',
       destination: to,
       message: JSON.stringify({ type: 'text', text }),
-      'src.name': 'CSMBot',
+      'src.name': GUPSHUP_APP_NAME,
     }, { headers });
   } catch (err) {
     logger.error('Send Message Error:', err.response?.data || err.message);
@@ -24,7 +24,7 @@ async function sendMessage(to, text) {
 
 async function sendImage(to, imageUrl, caption = '') {
   try {
-    await axios.post('https://api.gupshup.io/wa/api/v1/msg', {
+    const res = await axios.post('https://api.gupshup.io/wa/api/v1/msg', {
       channel: 'whatsapp',
       source: '917834811114',
       destination: to,
@@ -34,12 +34,14 @@ async function sendImage(to, imageUrl, caption = '') {
         previewUrl: imageUrl,
         caption,
       }),
-      'src.name': 'CSMBot',
+      'src.name': GUPSHUP_APP_NAME,
     }, { headers });
-     return res.status === 200;
+
+    return res.status === 200;
   } catch (err) {
+    console.log('Send Image Error:', err.response?.data || err.message);
     logger.error('Send Image Error:', err.response?.data || err.message);
+    return false;
   }
 }
-
 module.exports = { sendMessage, sendImage };
